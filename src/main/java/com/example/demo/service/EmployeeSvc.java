@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Employee;
+import com.example.demo.store.EmployeeDAO;
 import com.example.demo.store.EmployeeStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,14 +12,15 @@ import java.util.List;
 @Service
 public class EmployeeSvc {
 
-    private EmployeeStore store;
+    private EmployeeDAO store;
 
     @Autowired
-    public EmployeeSvc(EmployeeStore store) {
+    public EmployeeSvc(EmployeeDAO store) {
         this.store = store;
     }
 
     public void add(Employee emp) {
+        emp.setId(0);
         store.save(emp);
     }
 
@@ -37,6 +39,6 @@ public class EmployeeSvc {
     }
 
     public void delete(int id) throws Exception {
-        store.delete(store.findById(id).orElseThrow());
+        store.delete(id);
     }
 }
