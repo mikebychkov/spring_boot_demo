@@ -37,6 +37,6 @@ public class EmployeeSvc {
     }
 
     public void delete(int id) throws Exception {
-        store.delete(store.findById(id).orElseThrow());
+        store.deleteById(id);
     }
 }
