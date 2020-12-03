@@ -11,21 +11,6 @@ import java.util.Date;
 @Controller
 public class HelloController {
 
-    private final EmployeeSvc employeeSvc;
-
-    @Autowired
-    public HelloController(EmployeeSvc employeeSvc) {
-        this.employeeSvc = employeeSvc;
-    }
-
-    @GetMapping("/")
-    public String index(Model model) {
-
-        model.addAttribute("emps", employeeSvc.getAll());
-
-        return "index";
-    }
-
     @GetMapping("/hello")
     public String hello(Model model) {
 

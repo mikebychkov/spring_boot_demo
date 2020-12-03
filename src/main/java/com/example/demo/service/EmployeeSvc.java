@@ -28,6 +28,12 @@ public class EmployeeSvc {
         return rsl;
     }
 
+    public List<Employee> getAllSorted() {
+        List<Employee> rsl = new ArrayList<>();
+        store.findAllByOrderByNameAsc().forEach(rsl::add);
+        return rsl;
+    }
+
     public Employee getById(int id) throws Exception {
         return store.findById(id).orElseThrow();
     }
