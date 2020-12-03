@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Employees</title>
@@ -18,7 +19,23 @@
     <hr>
 
     <div class="container pb-1">
-        <a th:href="@{/emps/edit(id=0)}" type="button" class="btn btn-primary">Add Employee</a>
+        <table width="100%">
+            <tr>
+                <td align="left">
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <a th:href="@{/emps/edit(id=0)}" type="button" class="btn btn-primary">Add Employee</a>
+                    </div>
+                </td>
+                <td align="right">
+                    User: <span sec:authentication="name"></span>
+                </td>
+                <td align="right">
+                    <form th:action="@{/logout}" method="POST">
+                        <input type="submit" value="Logout" class="btn btn-outline-primary ml-sm-2" />
+                    </form>
+                </td>
+            </tr>
+        </table>
     </div>
 
     <div class="container">
@@ -28,7 +45,9 @@
                     <th>ID</th>
                     <th>Name</th>
                     <th>Salary</th>
-                    <th>Action</th>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <th>Action</th>
+                    </div>
                 </tr>
             </thead>
             <tbody>
@@ -36,13 +55,15 @@
                     <td th:text="${temp.id}"/>
                     <td th:text="${temp.name}"/>
                     <td th:text="${temp.salary}"/>
-                    <td>
-                        <a type="button" th:href="@{/emps/edit/(id=${temp.id})}" class="btn btn-warning">Edit</a>
-                        <a type="button" th:href="@{/emps/delete/(id=${temp.id})}" class="btn btn-danger"
-                            onclick="if(!(confirm('Are you sure?'))) return false">
-                            Delete
-                        </a>
-                    </td>
+                    <div sec:authorize="hasRole('ROLE_ADMIN')">
+                        <td>
+                            <a type="button" th:href="@{/emps/edit(id=${temp.id})}" class="btn btn-warning">Edit</a>
+                            <a type="button" th:href="@{/emps/delete(id=${temp.id})}" class="btn btn-danger"
+                                onclick="if(!(confirm('Are you sure?'))) return false">
+                                Delete
+                            </a>
+                        </td>
+                    </div>
                 </tr>
             </tbody>
         </table>
